@@ -163,6 +163,8 @@ GET /tenants/{tenantId}/risk-stats
 
 **Testing:** Integration tests, E2E tests, load testing, security testing
 
+**Infrastructure & Deployment:** Containerization (Docker), infrastructure as code (Terraform), CI/CD pipelines, environment management
+
 ---
 
 ## Summary
