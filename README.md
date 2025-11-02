@@ -63,10 +63,10 @@ Visit http://localhost:3000
 ## Features
 
 ✅ Template management - Create and manage policy templates  
-✅ Policy versioning - Append-only version history  
+✅ Policy versioning - Append-only version history with timestamps  
 ✅ Version comparison - Side-by-side diff view  
-✅ Preview rendering - Generate HTML preview from schema + content  
-✅ Restore versions - Create new version from old one  
+✅ View/Edit versions - View read-only or edit any version (creates new version)  
+✅ Preview rendering - Optional HTML preview from schema + content  
 
 ## API Routes
 
@@ -100,9 +100,9 @@ Visit http://localhost:3000
 1. **Create Template** - Define policy structure with sections, options, and conditional text
 2. **Create Policy** - Link a customer to a template
 3. **Edit Policy** - Select stances/choices, save as new version
-4. **View History** - See all versions with change notes
+4. **View History** - See all versions with timestamps and change notes
 5. **Compare** - Side-by-side diff of any two versions
-6. **Restore** - Create new version from old one
+6. **Edit Previous Version** - Click "Edit" on any version to create a new version from it
 
 ## Seed Data
 
@@ -126,6 +126,11 @@ npm test
 
 ## Development Status
 
-✅ Complete - All features implemented with step-by-step Git commits
-✅ Minimal tests added for critical versioning and preview functionality
+✅ Complete - All features implemented with step-by-step Git commits  
+✅ Minimal tests added for critical versioning and preview functionality  
+📝 **Focus:** Option B - Basic Versioning System (as per technical challenge requirements)
+
+## 📚 Additional Documentation
+
+For details on future enhancements, improvements, and production-ready considerations, see [ENHANCEMENTS.md](./ENHANCEMENTS.md).
 
