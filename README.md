@@ -20,6 +20,7 @@ npm install
 ```bash
 cp .env.example .env
 # Edit .env with your PostgreSQL connection string
+# DATABASE_URL="postgresql://user:password@localhost:5432/forsyte?schema=public"
 ```
 
 3. Run database migrations:
@@ -32,22 +33,85 @@ npm run db:migrate
 npm run db:generate
 ```
 
-5. Start development server:
+5. (Optional) Seed sample data:
+```bash
+npm run db:seed
+```
+
+6. Start development server:
 ```bash
 npm run dev
 ```
 
+Visit http://localhost:3000
+
 ## Project Structure
 
 ```
-/app              → UI only (Next.js App Router)
-/services         → Business logic
-/repositories     → Prisma database access
-/prisma/schema    → Database models
-/lib              → Shared utilities (Prisma client)
+/app                          → UI only (Next.js App Router)
+  /api                        → API route handlers
+  /policies                   → Policy management pages
+  /templates                  → Template listing page
+/services                     → Business logic layer
+/repositories                 → Prisma database access
+/prisma
+  /schema.prisma              → Database models
+  /seed.ts                    → Seed script
+/lib                          → Shared utilities (Prisma client)
 ```
+
+## Features
+
+✅ Template management - Create and manage policy templates  
+✅ Policy versioning - Append-only version history  
+✅ Version comparison - Side-by-side diff view  
+✅ Preview rendering - Generate HTML preview from schema + content  
+✅ Restore versions - Create new version from old one  
+
+## API Routes
+
+### Templates
+- `POST /api/templates` - Create template
+- `GET /api/templates` - List templates
+- `GET /api/templates/:templateId` - Get template
+
+### Policies
+- `POST /api/policies` - Create policy (customer + template)
+- `GET /api/policies?customerId=` - List customer policies
+- `GET /api/policies/:policyId` - Get policy
+
+### Policy Versions
+- `POST /api/policies/:policyId/versions` - Create new version
+- `GET /api/policies/:policyId/versions` - List all versions
+- `GET /api/policies/:policyId/versions/latest` - Get latest version
+- `GET /api/policies/:policyId/versions/:version` - Get specific version
+
+### Preview
+- `POST /api/preview` - Generate HTML preview (requires schemaJson and contentJson)
+
+## Data Model
+
+**Template**: Defines form structure and available options  
+**Policy**: Links customer to template (one policy per customer per template)  
+**PolicyVersion**: Stores stance choices with version number and change notes
+
+## Usage Flow
+
+1. **Create Template** - Define policy structure with sections, options, and conditional text
+2. **Create Policy** - Link a customer to a template
+3. **Edit Policy** - Select stances/choices, save as new version
+4. **View History** - See all versions with change notes
+5. **Compare** - Side-by-side diff of any two versions
+6. **Restore** - Create new version from old one
+
+## Seed Data
+
+The seed script creates:
+- Sample "High-Risk Client Assessment Policy" template
+- Policy for `customer-1`
+- Two initial versions demonstrating version history
 
 ## Development Status
 
-🚧 In Progress - Building step by step with Git commits
+✅ Complete - All features implemented with step-by-step Git commits
 
