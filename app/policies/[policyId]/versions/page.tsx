@@ -91,9 +91,13 @@ export default function VersionHistoryPage() {
 
   const handleCompare = () => {
     if (compareVersion1 && compareVersion2) {
-      router.push(
-        `/policies/${policyId}/compare?v1=${compareVersion1}&v2=${compareVersion2}`
-      )
+      const v1 = versions.find((v) => v.id === compareVersion1)
+      const v2 = versions.find((v) => v.id === compareVersion2)
+      if (v1 && v2) {
+        router.push(
+          `/policies/${policyId}/compare?v1=${v1.version}&v2=${v2.version}`
+        )
+      }
     }
   }
 

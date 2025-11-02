@@ -26,8 +26,8 @@ export default function ComparePage() {
   const router = useRouter()
   const policyId = params.policyId as string
 
-  const v1Id = searchParams.get('v1')
-  const v2Id = searchParams.get('v2')
+  const v1Num = searchParams.get('v1')
+  const v2Num = searchParams.get('v2')
 
   const [policy, setPolicy] = useState<Policy | null>(null)
   const [version1, setVersion1] = useState<PolicyVersion | null>(null)
@@ -35,14 +35,14 @@ export default function ComparePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!v1Id || !v2Id) {
+    if (!v1Num || !v2Num) {
       router.push(`/policies/${policyId}/versions`)
       return
     }
 
     loadPolicy()
     loadVersions()
-  }, [policyId, v1Id, v2Id])
+  }, [policyId, v1Num, v2Num])
 
   const loadPolicy = async () => {
     try {
@@ -57,23 +57,27 @@ export default function ComparePage() {
   }
 
   const loadVersions = async () => {
-    if (!v1Id || !v2Id) return
+    if (!v1Num || !v2Num) return
 
     try {
+      const version1Num = parseInt(v1Num, 10)
+      const version2Num = parseInt(v2Num, 10)
+
+      if (isNaN(version1Num) || isNaN(version2Num)) {
+        router.push(`/policies/${policyId}/versions`)
+        return
+      }
+
       const [res1, res2] = await Promise.all([
-        fetch(`/api/policies/${policyId}/versions/${v1Id}`),
-        fetch(`/api/policies/${policyId}/versions/${v2Id}`),
+        fetch(`/api/policies/${policyId}/versions/${version1Num}`),
+        fetch(`/api/policies/${policyId}/versions/${version2Num}`),
       ])
 
-      // Since we have version IDs, we need to fetch by ID
-      // Let's fetch all versions and find the ones we need
-      const allVersionsRes = await fetch(`/api/policies/${policyId}/versions`)
-      if (allVersionsRes.ok) {
-        const allVersions = await allVersionsRes.json()
-        const v1 = allVersions.find((v: PolicyVersion) => v.id === v1Id)
-        const v2 = allVersions.find((v: PolicyVersion) => v.id === v2Id)
-        setVersion1(v1 || null)
-        setVersion2(v2 || null)
+      if (res1.ok && res2.ok) {
+        const v1 = await res1.json()
+        const v2 = await res2.json()
+        setVersion1(v1)
+        setVersion2(v2)
       }
     } catch (error) {
       console.error('Error loading versions:', error)
