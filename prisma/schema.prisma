@@ -11,48 +11,32 @@ datasource db {
 }
 
 model Template {
-  id        String   @id @default(uuid())
-  name      String
-  createdBy String
-  createdAt DateTime @default(now())
-
-  versions TemplateVersion[]
-  policies Policy[]
-}
-
-model TemplateVersion {
   id         String   @id @default(uuid())
-  template   Template @relation(fields: [templateId], references: [id])
-  templateId String
-  version    Int
-  schemaJson Json
-  createdBy  String?
+  name       String
+  schemaJson Json     // defines selectable sections, stances, conditional text
   createdAt  DateTime @default(now())
-
-  @@unique([templateId, version])
+  policies   Policy[]
 }
 
 model Policy {
   id            String   @id @default(uuid())
-  customerId    String
-  templateId    String
-  templateVerId String
-  createdAt     DateTime @default(now())
+  customerId   String   // equal the law firm / organization ID.
+  templateId   String
+  template     Template @relation(fields: [templateId], references: [id])
+  createdAt    DateTime @default(now())
+  versions     PolicyVersion[]
 
-  template Template @relation(fields: [templateId], references: [id])
-  versions PolicyVersion[]
-
-  @@unique([customerId, templateId])
+  @@unique([customerId, templateId]) // one policy per customer per template
 }
 
 model PolicyVersion {
   id          String   @id @default(uuid())
   policyId    String
+  policy      Policy   @relation(fields: [policyId], references: [id], onDelete: Cascade)
   version     Int
   contentJson Json
+  changeNote  String?
   createdAt   DateTime @default(now())
-
-  policy Policy @relation(fields: [policyId], references: [id])
 
   @@unique([policyId, version])
 }
