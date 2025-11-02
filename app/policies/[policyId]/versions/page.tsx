@@ -63,31 +63,6 @@ export default function VersionHistoryPage() {
     }
   }
 
-  const handleRestore = async (version: PolicyVersion) => {
-    if (!confirm(`Restore version ${version.version}? This will create a new version.`)) {
-      return
-    }
-
-    try {
-      const response = await fetch(`/api/policies/${policyId}/versions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contentJson: version.contentJson,
-          changeNote: `Restored from version ${version.version}`,
-        }),
-      })
-
-      if (response.ok) {
-        router.push(`/policies/${policyId}/edit`)
-      } else {
-        alert('Failed to restore version')
-      }
-    } catch (error) {
-      console.error('Error restoring version:', error)
-      alert('Error restoring version')
-    }
-  }
 
   const handleCompare = () => {
     if (compareVersion1 && compareVersion2) {
@@ -168,7 +143,7 @@ export default function VersionHistoryPage() {
 
       <div style={{ marginBottom: '1rem' }}>
         <Link
-          href={`/policies/${policyId}/edit`}
+          href="/policies"
           style={{
             padding: '0.5rem 1rem',
             border: '1px solid #ccc',
@@ -176,7 +151,7 @@ export default function VersionHistoryPage() {
             display: 'inline-block',
           }}
         >
-          ← Back to Editor
+          ← Back to Policies
         </Link>
       </div>
 
@@ -204,7 +179,7 @@ export default function VersionHistoryPage() {
                 </td>
                 <td style={{ padding: '0.5rem' }}>
                   <button
-                    onClick={() => router.push(`/policies/${policyId}/edit`)}
+                    onClick={() => router.push(`/policies/${policyId}/edit?version=${version.version}&mode=view`)}
                     style={{
                       padding: '0.25rem 0.5rem',
                       marginRight: '0.5rem',
@@ -216,10 +191,10 @@ export default function VersionHistoryPage() {
                       fontSize: '0.9rem',
                     }}
                   >
-                    Open
+                    View
                   </button>
                   <button
-                    onClick={() => handleRestore(version)}
+                    onClick={() => router.push(`/policies/${policyId}/edit?version=${version.version}`)}
                     style={{
                       padding: '0.25rem 0.5rem',
                       marginRight: '0.5rem',
@@ -231,7 +206,7 @@ export default function VersionHistoryPage() {
                       fontSize: '0.9rem',
                     }}
                   >
-                    Restore
+                    Edit
                   </button>
                 </td>
               </tr>

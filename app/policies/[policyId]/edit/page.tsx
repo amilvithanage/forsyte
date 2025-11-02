@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 interface Policy {
   id: string
@@ -18,15 +18,21 @@ interface PolicyVersion {
   version: number
   contentJson: any
   changeNote?: string | null
+  createdAt: string
 }
 
 export default function PolicyEditorPage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const policyId = params.policyId as string
+  const versionParam = searchParams.get('version')
+  const mode = searchParams.get('mode')
+  const isViewMode = mode === 'view'
 
   const [policy, setPolicy] = useState<Policy | null>(null)
   const [latestVersion, setLatestVersion] = useState<PolicyVersion | null>(null)
+  const [currentVersion, setCurrentVersion] = useState<PolicyVersion | null>(null)
   const [contentJson, setContentJson] = useState<any>({})
   const [changeNote, setChangeNote] = useState('')
   const [loading, setLoading] = useState(true)
@@ -35,9 +41,24 @@ export default function PolicyEditorPage() {
   const [showPreview, setShowPreview] = useState(false)
 
   useEffect(() => {
-    loadPolicy()
-    loadLatestVersion()
-  }, [policyId])
+    const initialize = async () => {
+      await loadPolicy()
+      const latest = await loadLatestVersion()
+      
+      if (versionParam) {
+        await loadVersion(parseInt(versionParam, 10), latest)
+      } else {
+        // If no version specified, use latest version as current
+        if (latest) {
+          setCurrentVersion(latest)
+          setContentJson(latest.contentJson || {})
+        }
+        setLoading(false)
+      }
+    }
+    
+    initialize()
+  }, [policyId, versionParam])
 
   const loadPolicy = async () => {
     try {
@@ -51,20 +72,49 @@ export default function PolicyEditorPage() {
     }
   }
 
-  const loadLatestVersion = async () => {
+  const loadLatestVersion = async (): Promise<PolicyVersion | null> => {
     try {
       const response = await fetch(`/api/policies/${policyId}/versions/latest`)
       if (response.ok) {
         const data = await response.json()
         setLatestVersion(data)
-        setContentJson(data.contentJson || {})
-      } else {
-        // No version yet, start with empty content
-        setContentJson({})
+        return data
       }
     } catch (error) {
       console.error('Error loading latest version:', error)
-    } finally {
+    }
+    return null
+  }
+
+  const loadVersion = async (versionNumber: number, fallbackLatestVersion?: PolicyVersion | null) => {
+    try {
+      const response = await fetch(`/api/policies/${policyId}/versions/${versionNumber}`)
+      if (response.ok) {
+        const data = await response.json()
+        setCurrentVersion(data)
+        setContentJson(data.contentJson || {})
+        setLoading(false)
+      } else {
+        // Fallback to latest version if specific version not found
+        const latest = fallbackLatestVersion || await loadLatestVersion()
+        if (latest) {
+          setCurrentVersion(latest)
+          setContentJson(latest.contentJson || {})
+        } else {
+          setContentJson({})
+        }
+        setLoading(false)
+      }
+    } catch (error) {
+      console.error('Error loading version:', error)
+      // Fallback to latest version on error
+      const latest = fallbackLatestVersion || await loadLatestVersion()
+      if (latest) {
+        setCurrentVersion(latest)
+        setContentJson(latest.contentJson || {})
+      } else {
+        setContentJson({})
+      }
       setLoading(false)
     }
   }
@@ -94,14 +144,15 @@ export default function PolicyEditorPage() {
                 value={option.value}
                 checked={currentValue === option.value}
                 onChange={(e) => handleFieldChange(fieldKey, e.target.value)}
+                disabled={isViewMode}
                 style={{ marginRight: '0.5rem' }}
               />
               {option.label || option.value}
             </label>
           ))}
-          {latestVersion && latestVersion.contentJson[fieldKey] !== currentValue && (
+          {currentVersion && currentVersion.contentJson[fieldKey] !== currentValue && (
             <span style={{ color: 'orange', fontSize: '0.9rem', marginLeft: '1rem' }}>
-              (Changed from v{latestVersion.version})
+              (Changed from v{currentVersion.version})
             </span>
           )}
         </div>
@@ -117,6 +168,7 @@ export default function PolicyEditorPage() {
           <select
             value={currentValue || ''}
             onChange={(e) => handleFieldChange(fieldKey, e.target.value)}
+            disabled={isViewMode}
             style={{ padding: '0.5rem', width: '100%', maxWidth: '400px' }}
           >
             <option value="">Select...</option>
@@ -139,6 +191,7 @@ export default function PolicyEditorPage() {
           <textarea
             value={currentValue || ''}
             onChange={(e) => handleFieldChange(fieldKey, e.target.value)}
+            disabled={isViewMode}
             rows={4}
             style={{ padding: '0.5rem', width: '100%', maxWidth: '600px' }}
           />
@@ -208,16 +261,16 @@ export default function PolicyEditorPage() {
   const schemaJson = policy.template.schemaJson
   const sections = schemaJson?.sections || []
 
-  return (
+    return (
     <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
       <div style={{ marginBottom: '2rem' }}>
-        <h1>Policy Editor</h1>
+        <h1>{isViewMode ? 'Policy Viewer' : 'Policy Editor'}</h1>
         <p>
           <strong>Template:</strong> {policy.template.name}
         </p>
         {latestVersion && (
           <p>
-            <strong>Current Version:</strong> v{latestVersion.version} (Last edited:{' '}
+            <strong>Latest Version:</strong> v{latestVersion.version} (Last edited:{' '}
             {new Date(latestVersion.createdAt).toLocaleString()})
           </p>
         )}
@@ -227,70 +280,105 @@ export default function PolicyEditorPage() {
         <div>
           <div style={{ marginBottom: '2rem' }}>
             <h2>Section: {policy.template.name}</h2>
-            {latestVersion && (
+            {currentVersion && (
               <p style={{ color: '#666', fontSize: '0.9rem' }}>
-                v{latestVersion.version} - Current
+                v{currentVersion.version}
               </p>
             )}
           </div>
 
           {sections.map((section: any) => renderField(section))}
 
-          <div style={{ marginTop: '2rem', marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
-              Change Reason:
-            </label>
-            <input
-              type="text"
-              value={changeNote}
-              onChange={(e) => setChangeNote(e.target.value)}
-              placeholder="Describe what changed and why..."
-              style={{ padding: '0.5rem', width: '100%', maxWidth: '600px' }}
-            />
-          </div>
+          {!isViewMode && (
+            <>
+              <div style={{ marginTop: '2rem', marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+                  Change Reason:
+                </label>
+                <input
+                  type="text"
+                  value={changeNote}
+                  onChange={(e) => setChangeNote(e.target.value)}
+                  placeholder="Describe what changed and why..."
+                  style={{ padding: '0.5rem', width: '100%', maxWidth: '600px' }}
+                />
+              </div>
 
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              style={{
-                padding: '0.75rem 1.5rem',
-                backgroundColor: '#0070f3',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: saving ? 'not-allowed' : 'pointer',
-              }}
-            >
-              {saving ? 'Saving...' : 'Save New Version'}
-            </button>
-            <button
-              onClick={handlePreview}
-              style={{
-                padding: '0.75rem 1.5rem',
-                backgroundColor: '#666',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              Preview Changes
-            </button>
-            <button
-              onClick={() => router.push(`/policies/${policyId}/versions`)}
-              style={{
-                padding: '0.75rem 1.5rem',
-                backgroundColor: 'transparent',
-                color: '#0070f3',
-                border: '1px solid #0070f3',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              View Version History
-            </button>
-          </div>
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                <button
+                  onClick={handleSave}
+                  disabled={saving}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    backgroundColor: '#0070f3',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: saving ? 'not-allowed' : 'pointer',
+                  }}
+                >
+                  {saving ? 'Saving...' : 'Save New Version'}
+                </button>
+                <button
+                  onClick={handlePreview}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    backgroundColor: '#666',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Preview Changes
+                </button>
+                <button
+                  onClick={() => router.push(`/policies/${policyId}/versions`)}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    backgroundColor: 'transparent',
+                    color: '#0070f3',
+                    border: '1px solid #0070f3',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  View Version History
+                </button>
+              </div>
+            </>
+          )}
+
+          {isViewMode && (
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+              <button
+                onClick={() => router.push(`/policies/${policyId}/edit?version=${currentVersion?.version || versionParam}`)}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: '#28a745',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                }}
+              >
+                Edit This Version
+              </button>
+              <button
+                onClick={() => router.push(`/policies/${policyId}/versions`)}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: 'transparent',
+                  color: '#0070f3',
+                  border: '1px solid #0070f3',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                }}
+              >
+                Back to Version History
+              </button>
+            </div>
+          )}
         </div>
 
         {showPreview && previewHtml && (
