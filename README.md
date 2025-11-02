@@ -111,7 +111,21 @@ The seed script creates:
 - Policy for `customer-1`
 - Two initial versions demonstrating version history
 
+## Testing
+
+Minimal test coverage for critical functionality:
+
+- **Version numbering logic**: Tests that version numbers increment correctly
+- **Version creation**: Tests policy version creation with proper version assignment
+- **Preview generation**: Tests template + data integration for document preview
+
+Run tests:
+```bash
+npm test
+```
+
 ## Development Status
 
 ✅ Complete - All features implemented with step-by-step Git commits
+✅ Minimal tests added for critical versioning and preview functionality
 
