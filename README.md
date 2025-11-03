@@ -63,6 +63,15 @@ npm run dev
 
 Visit http://localhost:3000
 
+## Deployment
+
+This application is deployed to **Vercel** at [https://forsyte.vercel.app/](https://forsyte.vercel.app/) using **Neon DB** as the PostgreSQL database provider.
+
+### Production Environment
+- **Platform**: Vercel
+- **Database**: Neon PostgreSQL
+- **URL**: https://forsyte.vercel.app/
+
 ## Project Structure
 
 ```
