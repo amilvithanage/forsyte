@@ -24,7 +24,6 @@ Current error handling is basic. Enhancements needed:
 - ⚠️ **Structured error responses** with error codes (e.g., `POLICY_NOT_FOUND`, `VALIDATION_ERROR`)
 - ⚠️ **Retry logic** for transient database failures
 - ⚠️ **Better client-side error display** (currently uses `alert()` - replace with toast notifications or inline errors)
-- ⚠️ **Graceful degradation** when preview generation fails
 - ⚠️ **Network error handling** with user-friendly messages and retry options
 
 **Current State:**

@@ -66,7 +66,6 @@ Visit http://localhost:3000
 ✅ Policy versioning - Append-only version history with timestamps  
 ✅ Version comparison - Side-by-side diff view  
 ✅ View/Edit versions - View read-only or edit any version (creates new version)  
-✅ Preview rendering - Optional HTML preview from schema + content  
 
 ## API Routes
 
@@ -85,9 +84,6 @@ Visit http://localhost:3000
 - `GET /api/policies/:policyId/versions` - List all versions
 - `GET /api/policies/:policyId/versions/latest` - Get latest version
 - `GET /api/policies/:policyId/versions/:version` - Get specific version
-
-### Preview
-- `POST /api/preview` - Generate HTML preview (requires schemaJson and contentJson)
 
 ## Data Model
 
@@ -117,7 +113,6 @@ Minimal test coverage for critical functionality:
 
 - **Version numbering logic**: Tests that version numbers increment correctly
 - **Version creation**: Tests policy version creation with proper version assignment
-- **Preview generation**: Tests template + data integration for document preview
 
 Run tests:
 ```bash
@@ -127,7 +122,7 @@ npm test
 ## Development Status
 
 ✅ Complete - All features implemented with step-by-step Git commits
-✅ Minimal tests added for critical versioning and preview functionality  
+✅ Minimal tests added for critical versioning
 📝 **Focus:** Option B - Basic Versioning System (as per technical challenge requirements)
 
 ## 📚 Additional Documentation
