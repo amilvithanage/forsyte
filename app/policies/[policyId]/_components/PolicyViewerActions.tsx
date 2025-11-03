@@ -12,49 +12,26 @@ export function PolicyViewerActions({ policyId, currentVersion }: PolicyViewerAc
   const router = useRouter()
 
   return (
-    <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
+    <div className="flex gap-4 mt-8 flex-wrap">
       <button
         onClick={() =>
           router.push(
             `/policies/${policyId}/edit${currentVersion ? `?version=${currentVersion}` : ''}`
           )
         }
-        style={{
-          padding: '0.75rem 1.5rem',
-          backgroundColor: '#28a745',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-        }}
+        className="px-6 py-3 bg-green-600 text-white border-none rounded cursor-pointer hover:bg-yellow-700"
       >
         Edit This Version
       </button>
       <Link
         href={`/policies/${policyId}/versions`}
-        style={{
-          padding: '0.75rem 1.5rem',
-          backgroundColor: 'transparent',
-          color: '#0070f3',
-          border: '1px solid #0070f3',
-          borderRadius: '4px',
-          display: 'inline-block',
-          textDecoration: 'none',
-        }}
+        className="px-6 py-3 bg-blue-600 text-white border-none rounded cursor-pointer hover:bg-blue-700"
       >
         View Version History
       </Link>
       <Link
         href={`/policies/${policyId}/edit`}
-        style={{
-          padding: '0.75rem 1.5rem',
-          backgroundColor: 'transparent',
-          color: '#0070f3',
-          border: '1px solid #0070f3',
-          borderRadius: '4px',
-          display: 'inline-block',
-          textDecoration: 'none',
-        }}
+        className="px-6 py-3 bg-yellow-600 text-white border-none rounded cursor-pointer hover:bg-yellow-700"
       >
         Edit Latest Version
       </Link>

@@ -21,17 +21,10 @@ export function PolicyViewerHeader({
   policyId,
 }: PolicyViewerHeaderProps) {
   return (
-    <div style={{ marginBottom: '2rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          marginBottom: '1rem',
-        }}
-      >
+    <div className="mb-8">
+      <div className="flex justify-between items-start mb-4">
         <div>
-          <h1>Policy Viewer</h1>
+          <h1 className="text-2xl font-bold mb-4">Policy Viewer</h1>
           <p>
             <strong>Template:</strong> {templateName}
           </p>
@@ -45,19 +38,14 @@ export function PolicyViewerHeader({
             </p>
           )}
           {currentVersion && (
-            <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '0.5rem' }}>
+            <p className="text-gray-600 text-sm mt-2">
               <strong>Viewing:</strong> v{currentVersion.version}
             </p>
           )}
         </div>
         <Link
           href="/policies"
-          style={{
-            padding: '0.5rem 1rem',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            display: 'inline-block',
-          }}
+          className="px-4 py-2 border border-gray-300 rounded inline-block hover:bg-gray-50"
         >
           ← Back to Policies
         </Link>

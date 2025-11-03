@@ -14,8 +14,8 @@ export function PolicyEditorHeader({
   versionParam,
 }: PolicyEditorHeaderProps) {
   return (
-    <div style={{ marginBottom: '2rem' }}>
-      <h1>Policy Editor</h1>
+    <div className="mb-8">
+      <h1 className="text-2xl font-bold mb-4">Policy Editor</h1>
       <p>
         <strong>Template:</strong> {templateName}
       </p>
@@ -26,7 +26,7 @@ export function PolicyEditorHeader({
         </p>
       )}
       {currentVersion && versionParam && (
-        <p style={{ color: '#666', fontSize: '0.9rem' }}>
+        <p className="text-gray-600 text-sm">
           <strong>Editing Version:</strong> v{currentVersion.version}
         </p>
       )}

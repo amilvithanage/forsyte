@@ -18,53 +18,35 @@ export function VersionTable({ versions, policyId }: VersionTableProps) {
   }
 
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <table className="w-full border-collapse">
       <thead>
-        <tr style={{ borderBottom: '2px solid #ccc' }}>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Version</th>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Change Note</th>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Created</th>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Actions</th>
+        <tr className="border-b-2 border-gray-300">
+          <th className="text-left p-2">Version</th>
+          <th className="text-left p-2">Change Note</th>
+          <th className="text-left p-2">Created</th>
+          <th className="text-left p-2">Actions</th>
         </tr>
       </thead>
       <tbody>
         {versions.map((version) => (
-          <tr key={version.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: '0.5rem', fontWeight: 'bold' }}>v{version.version}</td>
-            <td style={{ padding: '0.5rem' }}>
-              {version.changeNote || <em style={{ color: '#999' }}>No change note</em>}
+          <tr key={version.id} className="border-b border-gray-200">
+            <td className="p-2 font-bold">v{version.version}</td>
+            <td className="p-2">
+              {version.changeNote || <em className="text-gray-500">No change note</em>}
             </td>
-            <td style={{ padding: '0.5rem' }}>
+            <td className="p-2">
               {new Date(version.createdAt).toLocaleString()}
             </td>
-            <td style={{ padding: '0.5rem' }}>
+            <td className="p-2">
               <button
                 onClick={() => router.push(`/policies/${policyId}?version=${version.version}`)}
-                style={{
-                  padding: '0.25rem 0.5rem',
-                  marginRight: '0.5rem',
-                  backgroundColor: 'transparent',
-                  color: '#0070f3',
-                  border: '1px solid #0070f3',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.9rem',
-                }}
+                className="px-2 py-1 mr-2 bg-transparent text-blue-600 border border-blue-600 rounded cursor-pointer text-sm hover:bg-blue-50"
               >
                 View
               </button>
               <button
                 onClick={() => router.push(`/policies/${policyId}/edit?version=${version.version}`)}
-                style={{
-                  padding: '0.25rem 0.5rem',
-                  marginRight: '0.5rem',
-                  backgroundColor: 'transparent',
-                  color: '#28a745',
-                  border: '1px solid #28a745',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.9rem',
-                }}
+                className="px-2 py-1 mr-2 bg-transparent text-green-600 border border-green-600 rounded cursor-pointer text-sm hover:bg-green-50"
               >
                 Edit
               </button>

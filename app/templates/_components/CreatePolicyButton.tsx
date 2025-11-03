@@ -42,14 +42,7 @@ export function CreatePolicyButton({ templateId }: CreatePolicyButtonProps) {
     <button
       onClick={handleCreatePolicy}
       disabled={loading}
-      style={{
-        padding: '0.5rem 1rem',
-        backgroundColor: loading ? '#ccc' : '#0070f3',
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: loading ? 'not-allowed' : 'pointer',
-      }}
+      className="px-4 py-2 bg-blue-600 text-white border-none rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 disabled:hover:bg-gray-400"
     >
       {loading ? 'Creating...' : 'Create Policy'}
     </button>

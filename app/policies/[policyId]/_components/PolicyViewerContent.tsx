@@ -33,8 +33,8 @@ export function PolicyViewerContent({
     section: any,
     content: React.ReactNode
   ) => (
-    <div key={fieldKey} style={{ marginBottom: '1.5rem' }}>
-      <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+    <div key={fieldKey} className="mb-6">
+      <label className="block mb-2 font-bold">
         {section.title || fieldKey}
       </label>
       {content}
@@ -51,7 +51,7 @@ export function PolicyViewerContent({
       return renderFieldWrapper(
         fieldKey,
         section,
-        <p style={{ padding: '0.5rem 0', color: '#333' }}>{displayValue}</p>
+        <p className="py-2 text-gray-800">{displayValue}</p>
       )
     }
 
@@ -59,16 +59,7 @@ export function PolicyViewerContent({
       return renderFieldWrapper(
         fieldKey,
         section,
-        <p
-          style={{
-            padding: '0.5rem',
-            backgroundColor: '#f9f9f9',
-            borderRadius: '4px',
-            whiteSpace: 'pre-wrap',
-            color: '#333',
-            minHeight: '3rem',
-          }}
-        >
+        <p className="p-2 bg-gray-50 rounded whitespace-pre-wrap text-gray-800 min-h-12">
           {displayValue}
         </p>
       )
@@ -79,7 +70,7 @@ export function PolicyViewerContent({
 
   return (
     <div>
-      <div style={{ marginBottom: '2rem' }}>
+      <div className="mb-8">
         <h2>Policy Content</h2>
       </div>
       {sections.map(renderField)}

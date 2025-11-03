@@ -90,7 +90,7 @@ export default async function PolicyViewPage({ params, searchParams }: PolicyVie
   const sections = schemaJson?.sections || []
 
   return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <main className="p-8 max-w-5xl mx-auto">
       <PolicyViewerHeader
         templateName={policy.template.name}
         customerId={policy.customerId}

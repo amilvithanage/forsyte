@@ -48,25 +48,16 @@ export function ComparisonView({ version1, version2, schemaJson }: ComparisonVie
 
   if (!hasChanges()) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center', color: '#666' }}>
+      <div className="p-8 text-center text-gray-600">
         No changes detected between these versions.
       </div>
     )
   }
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '1rem',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        overflow: 'hidden',
-      }}
-    >
-      <div style={{ borderRight: '1px solid #ccc', padding: '1rem', backgroundColor: '#fff5f5' }}>
-        <h3 style={{ marginBottom: '1rem', color: '#c53030' }}>Version {version1.version}</h3>
+    <div className="grid grid-cols-2 gap-4 border border-gray-300 rounded overflow-hidden">
+      <div className="border-r border-gray-300 p-4 bg-red-50">
+        <h3 className="mb-4 text-red-700">Version {version1.version}</h3>
         {Array.from(allKeys).map((key) => {
           const v1Value = getFieldValue(key, version1.contentJson)
           const v2Value = getFieldValue(key, version2.contentJson)
@@ -77,25 +68,23 @@ export function ComparisonView({ version1, version2, schemaJson }: ComparisonVie
           return (
             <div
               key={key}
-              style={{
-                marginBottom: '1rem',
-                padding: '0.75rem',
-                backgroundColor: changed ? '#fed7d7' : 'transparent',
-                borderRadius: '4px',
-                border: changed ? '2px solid #c53030' : '1px solid #e2e8f0',
-              }}
+              className={`mb-4 p-3 rounded ${
+                changed
+                  ? 'bg-red-200 border-2 border-red-700'
+                  : 'bg-transparent border border-gray-200'
+              }`}
             >
-              <div style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              <div className="font-bold mb-2">
                 {getFieldLabel(key)}
               </div>
-              <div style={{ color: changed ? '#742a2a' : '#4a5568' }}>{v1Value}</div>
+              <div className={changed ? 'text-red-900' : 'text-gray-700'}>{v1Value}</div>
             </div>
           )
         })}
       </div>
 
-      <div style={{ padding: '1rem', backgroundColor: '#f0fff4' }}>
-        <h3 style={{ marginBottom: '1rem', color: '#22543d' }}>Version {version2.version}</h3>
+      <div className="p-4 bg-green-50">
+        <h3 className="mb-4 text-green-800">Version {version2.version}</h3>
         {Array.from(allKeys).map((key) => {
           const v1Value = getFieldValue(key, version1.contentJson)
           const v2Value = getFieldValue(key, version2.contentJson)
@@ -106,18 +95,16 @@ export function ComparisonView({ version1, version2, schemaJson }: ComparisonVie
           return (
             <div
               key={key}
-              style={{
-                marginBottom: '1rem',
-                padding: '0.75rem',
-                backgroundColor: changed ? '#c6f6d5' : 'transparent',
-                borderRadius: '4px',
-                border: changed ? '2px solid #22543d' : '1px solid #e2e8f0',
-              }}
+              className={`mb-4 p-3 rounded ${
+                changed
+                  ? 'bg-green-200 border-2 border-green-800'
+                  : 'bg-transparent border border-gray-200'
+              }`}
             >
-              <div style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              <div className="font-bold mb-2">
                 {getFieldLabel(key)}
               </div>
-              <div style={{ color: changed ? '#1a202c' : '#4a5568' }}>{v2Value}</div>
+              <div className={changed ? 'text-gray-900' : 'text-gray-700'}>{v2Value}</div>
             </div>
           )
         })}

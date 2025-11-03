@@ -93,18 +93,18 @@ export default function PolicyEditorPage() {
   }
 
   if (loading) {
-    return <div style={{ padding: '2rem' }}>Loading...</div>
+    return <div className="p-8">Loading...</div>
   }
 
   if (!policy) {
-    return <div style={{ padding: '2rem' }}>Policy not found</div>
+    return <div className="p-8">Policy not found</div>
   }
 
   const schemaJson = policy.template.schemaJson
   const sections = schemaJson?.sections || []
 
     return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <main className="p-8 max-w-5xl mx-auto">
       <PolicyEditorHeader
         templateName={policy.template.name}
         latestVersion={latestVersion}

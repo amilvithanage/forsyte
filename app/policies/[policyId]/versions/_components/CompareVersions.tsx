@@ -27,13 +27,13 @@ export function CompareVersions({ versions, policyId }: CompareVersionsProps) {
   }
 
   return (
-    <div style={{ marginBottom: '2rem', padding: '1rem', backgroundColor: '#f0f0f0', borderRadius: '4px' }}>
-      <h3>Compare Versions</h3>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginTop: '0.5rem' }}>
+    <div className="mb-8 p-4 bg-gray-100 rounded">
+      <h3 className="text-lg font-bold mb-2">Compare Versions</h3>
+      <div className="flex gap-4 items-center mt-2">
         <select
           value={compareVersion1 || ''}
           onChange={(e) => setCompareVersion1(e.target.value || null)}
-          style={{ padding: '0.5rem' }}
+          className="p-2 border border-gray-300 rounded"
         >
           <option value="">Select version 1...</option>
           {versions.map((v) => (
@@ -46,7 +46,7 @@ export function CompareVersions({ versions, policyId }: CompareVersionsProps) {
         <select
           value={compareVersion2 || ''}
           onChange={(e) => setCompareVersion2(e.target.value || null)}
-          style={{ padding: '0.5rem' }}
+          className="p-2 border border-gray-300 rounded"
         >
           <option value="">Select version 2...</option>
           {versions.map((v) => (
@@ -58,14 +58,7 @@ export function CompareVersions({ versions, policyId }: CompareVersionsProps) {
         <button
           onClick={handleCompare}
           disabled={!compareVersion1 || !compareVersion2}
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#0070f3',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: !compareVersion1 || !compareVersion2 ? 'not-allowed' : 'pointer',
-          }}
+          className="px-4 py-2 bg-blue-600 text-white border-none rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700"
         >
           Compare
         </button>

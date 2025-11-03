@@ -7,16 +7,10 @@ interface VersionHistoryHeaderProps {
 
 export function VersionHistoryHeader({ templateName, policyId }: VersionHistoryHeaderProps) {
   return (
-    <div style={{ marginBottom: '2rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-        }}
-      >
+    <div className="mb-8">
+      <div className="flex justify-between items-start">
         <div>
-          <h1>Version History</h1>
+          <h1 className="text-2xl font-bold mb-4">Version History</h1>
           <p>
             <strong>Template:</strong> {templateName}
           </p>
@@ -26,12 +20,7 @@ export function VersionHistoryHeader({ templateName, policyId }: VersionHistoryH
         </div>
         <Link
           href="/policies"
-          style={{
-            padding: '0.5rem 1rem',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            display: 'inline-block',
-          }}
+          className="px-4 py-2 border border-gray-300 rounded inline-block hover:bg-gray-50"
         >
           ← Back to Policies
         </Link>

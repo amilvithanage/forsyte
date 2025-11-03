@@ -13,33 +13,33 @@ export function PolicyTable({ policies }: PolicyTableProps) {
   }
 
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <table className="w-full border-collapse">
       <thead>
-        <tr style={{ borderBottom: '2px solid #ccc' }}>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Template</th>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Customer ID</th>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Created</th>
-          <th style={{ textAlign: 'left', padding: '0.5rem' }}>Actions</th>
+        <tr className="border-b-2 border-gray-300">
+          <th className="text-left p-2">Template</th>
+          <th className="text-left p-2">Customer ID</th>
+          <th className="text-left p-2">Created</th>
+          <th className="text-left p-2">Actions</th>
         </tr>
       </thead>
       <tbody>
         {policies.map((policy) => (
-          <tr key={policy.id} style={{ borderBottom: '1px solid #eee' }}>
-            <td style={{ padding: '0.5rem' }}>{policy.template.name}</td>
-            <td style={{ padding: '0.5rem' }}>{policy.customerId}</td>
-            <td style={{ padding: '0.5rem' }}>
+          <tr key={policy.id} className="border-b border-gray-200">
+            <td className="p-2">{policy.template.name}</td>
+            <td className="p-2">{policy.customerId}</td>
+            <td className="p-2">
               {new Date(policy.createdAt).toLocaleDateString()}
             </td>
-            <td style={{ padding: '0.5rem' }}>
-              <Link href={`/policies/${policy.id}`}>
+            <td className="p-2">
+              <Link href={`/policies/${policy.id}`} className="text-blue-600 hover:underline">
                 View Latest Version
               </Link>
               {' | '}
-              <Link href={`/policies/${policy.id}/edit`}>
+              <Link href={`/policies/${policy.id}/edit`} className="text-blue-600 hover:underline">
                 Edit Latest Version
               </Link>
               {' | '}
-              <Link href={`/policies/${policy.id}/versions`}>
+              <Link href={`/policies/${policy.id}/versions`} className="text-blue-600 hover:underline">
                 Versions History
               </Link>
             </td>
