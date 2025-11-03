@@ -66,16 +66,21 @@ Visit http://localhost:3000
 ## Project Structure
 
 ```
-/app                          → UI only (Next.js App Router)
-  /api                        → API route handlers
+/app                          → UI layer (Next.js App Router)
   /policies                   → Policy management pages
+    /[policyId]               → Individual policy pages
+      /edit                   → Policy editor
+      /versions                → Version history
+      /compare                 → Version comparison
   /templates                  → Template listing page
+  page.tsx                    → Home page
 /services                     → Business logic layer
-/repositories                 → Prisma database access
+/repositories                  → Prisma database access
 /prisma
   /schema.prisma              → Database models
   /seed.ts                    → Seed script
 /lib                          → Shared utilities (Prisma client)
+/types                        → TypeScript type definitions
 ```
 
 ## Features
@@ -160,7 +165,7 @@ This project was developed with AI assistance (Claude/Cursor) for:
 
 Manual coding focused on:
 - Business logic for versioning
-- API route handlers
+- Server action handlers
 - UI components and user flows
 - Database schema design
 

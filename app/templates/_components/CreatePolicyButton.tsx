@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createPolicy } from '@/app/policies/actions'
@@ -19,7 +20,7 @@ export function CreatePolicyButton({ templateId }: CreatePolicyButtonProps) {
     setLoading(true)
     try {
       const policy = await createPolicy(customerId, templateId)
-        router.push(`/policies/${policy.id}/edit`)
+      router.push(`/policies/${policy.id}/edit`)
     } catch (error: any) {
       console.error('Error creating policy:', error)
       alert(error.message || 'Failed to create policy')
