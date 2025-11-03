@@ -5,6 +5,9 @@ import { PolicyVersion } from '@/types/policy'
 import { getPolicy } from '../../_lib/policyUtils'
 import { notFound, redirect } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getVersionsByNumbers(
   policyId: string,
   version1: number,
@@ -36,11 +39,11 @@ async function getVersionsByNumbers(
           }
         : null,
     ]
-  } catch (error) {
+    } catch (error) {
     console.error('Error fetching versions:', error)
     return [null, null]
+    }
   }
-}
 
 interface ComparePageProps {
   params: { policyId: string }
@@ -59,14 +62,14 @@ export default async function ComparePage({ params, searchParams }: ComparePageP
   const version1Num = parseInt(v1Param, 10)
   const version2Num = parseInt(v2Param, 10)
 
-  if (isNaN(version1Num) || isNaN(version2Num)) {
+      if (isNaN(version1Num) || isNaN(version2Num)) {
     redirect(`/policies/${policyId}/versions`)
-  }
+      }
 
   const [policy, [version1, version2]] = await Promise.all([
     getPolicy(policyId, { includeSchemaJson: true }),
     getVersionsByNumbers(policyId, version1Num, version2Num),
-  ])
+    ])
 
   if (!policy || !policy.template || !version1 || !version2) {
     notFound()

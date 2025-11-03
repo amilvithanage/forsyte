@@ -6,6 +6,9 @@ import { PolicyVersion } from '@/types/policy'
 import { getPolicy } from '../_lib/policyUtils'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getLatestVersion(policyId: string): Promise<PolicyVersion | null> {
   try {
     const version = await policyVersionService.getLatestPolicyVersion(policyId)

@@ -6,6 +6,9 @@ import { PolicyVersion } from '@/types/policy'
 import { getPolicy } from '../../_lib/policyUtils'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getVersions(policyId: string): Promise<PolicyVersion[]> {
   try {
     const versions = await policyVersionService.listPolicyVersions(policyId)
@@ -16,11 +19,11 @@ async function getVersions(policyId: string): Promise<PolicyVersion[]> {
       changeNote: version.changeNote,
       createdAt: version.createdAt.toISOString(),
     }))
-  } catch (error) {
+    } catch (error) {
     console.error('Error fetching versions:', error)
     return []
+    }
   }
-}
 
 interface VersionHistoryPageProps {
   params: { policyId: string }
