@@ -147,6 +147,34 @@ npm test
 
 ## Technical Decisions
 
+
+### Why Server Actions Instead of REST APIs?
+
+**Server Actions** provide type-safe, direct function calls from client to server without HTTP boilerplate:
+- End-to-end TypeScript type safety
+- Simpler code: `await createPolicy(...)` vs `fetch('/api/policies', {...})`
+- Better performance through request deduplication and colocation
+- Built-in form handling and optimistic updates
+
+*Note: REST APIs are better for public APIs, mobile apps, or microservices communication.*
+
+### Decoupled Architecture for Scalability
+
+The project uses a **4-layer architecture** with clear separation:
+
+```
+Server Actions → Services → Repositories → Database
+```
+
+**Key Benefits:**
+- **Independent scaling**: Each layer optimized separately
+- **Easy testing**: Mock dependencies between layers
+- **Technology flexibility**: Switch databases/ORMs without changing business logic
+- **Multiple interfaces**: Same service layer supports Server Actions, REST APIs, or background jobs
+- **Future migration**: Extract services to microservices without rewriting business logic
+
+This decoupling enables scaling from monolith to microservices by only changing communication between layers, not the core business logic.
+
 ### Why Option B (Basic Versioning System)?
 
 This implementation focuses on versioning because:
