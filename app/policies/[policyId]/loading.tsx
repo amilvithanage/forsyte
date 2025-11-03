@@ -1,95 +1,27 @@
 export default function PolicyViewLoading() {
   return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <div
-          className="skeleton"
-          style={{
-            height: '2rem',
-            width: '200px',
-            marginBottom: '1rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '1.2rem',
-            width: '300px',
-            marginBottom: '0.5rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '1.2rem',
-            width: '250px',
-            marginBottom: '0.5rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '1.2rem',
-            width: '200px',
-          }}
-        />
+    <main className="p-8 max-w-5xl mx-auto">
+      <div className="mb-8">
+        <div className="skeleton h-8 w-48 mb-4" />
+        <div className="skeleton h-5 w-72 mb-2" />
+        <div className="skeleton h-5 w-60 mb-2" />
+        <div className="skeleton h-5 w-48" />
       </div>
 
-      <div style={{ marginBottom: '2rem' }}>
-        <div
-          className="skeleton"
-          style={{
-            height: '1.5rem',
-            width: '150px',
-            marginBottom: '1.5rem',
-          }}
-        />
+      <div className="mb-8">
+        <div className="skeleton h-6 w-36 mb-6" />
         {[1, 2, 3].map((i) => (
-          <div
-            key={i}
-            style={{
-              marginBottom: '1.5rem',
-              padding: '1rem',
-              border: '1px solid #eee',
-              borderRadius: '4px',
-            }}
-          >
-            <div
-              className="skeleton"
-              style={{
-                height: '1.2rem',
-                width: '200px',
-                marginBottom: '0.5rem',
-              }}
-            />
-            <div
-              className="skeleton"
-              style={{
-                height: '3rem',
-                width: '100%',
-              }}
-            />
+          <div key={i} className="mb-6 p-4 border border-gray-200 rounded">
+            <div className="skeleton h-5 w-48 mb-2" />
+            <div className="skeleton h-12 w-full" />
           </div>
         ))}
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-        <div
-          className="skeleton"
-          style={{
-            height: '2.5rem',
-            width: '150px',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '2.5rem',
-            width: '180px',
-          }}
-        />
+      <div className="flex gap-4 mt-8">
+        <div className="skeleton h-10 w-36" />
+        <div className="skeleton h-10 w-44" />
       </div>
     </main>
   )
 }
-

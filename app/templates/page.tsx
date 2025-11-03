@@ -1,6 +1,6 @@
 import { templateService } from '@/services/templateService'
-import { TemplateTable } from './components/TemplateTable'
-import { TemplateHeader } from './components/TemplateHeader'
+import { TemplateTable } from './_components/TemplateTable'
+import { TemplateHeader } from './_components/TemplateHeader'
 import { Template } from '@/types/template'
 
 async function getTemplates(): Promise<Template[]> {
@@ -22,7 +22,7 @@ export default async function TemplatesPage() {
   const templates = await getTemplates()
 
   return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <main className="p-8 max-w-5xl mx-auto">
       <TemplateHeader />
       <TemplateTable templates={templates} />
     </main>

@@ -1,110 +1,31 @@
 export default function CompareLoading() {
   return (
-    <main style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <div
-          className="skeleton"
-          style={{
-            height: '2rem',
-            width: '250px',
-            marginBottom: '1rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '1.2rem',
-            width: '200px',
-            marginBottom: '1.5rem',
-          }}
-        />
-        <div style={{ display: 'flex', gap: '2rem', marginTop: '1rem' }}>
+    <main className="p-8 max-w-7xl mx-auto">
+      <div className="mb-8">
+        <div className="skeleton h-8 w-60 mb-4" />
+        <div className="skeleton h-5 w-48 mb-6" />
+        <div className="flex gap-8 mt-4">
           <div>
-            <div
-              className="skeleton"
-              style={{
-                height: '1.2rem',
-                width: '100px',
-                marginBottom: '0.5rem',
-              }}
-            />
-            <div
-              className="skeleton"
-              style={{
-                height: '1rem',
-                width: '150px',
-                marginBottom: '0.25rem',
-              }}
-            />
-            <div
-              className="skeleton"
-              style={{
-                height: '1rem',
-                width: '200px',
-              }}
-            />
+            <div className="skeleton h-5 w-24 mb-2" />
+            <div className="skeleton h-4 w-36 mb-1" />
+            <div className="skeleton h-4 w-48" />
           </div>
           <div>
-            <div
-              className="skeleton"
-              style={{
-                height: '1.2rem',
-                width: '100px',
-                marginBottom: '0.5rem',
-              }}
-            />
-            <div
-              className="skeleton"
-              style={{
-                height: '1rem',
-                width: '150px',
-                marginBottom: '0.25rem',
-              }}
-            />
-            <div
-              className="skeleton"
-              style={{
-                height: '1rem',
-                width: '200px',
-              }}
-            />
+            <div className="skeleton h-5 w-24 mb-2" />
+            <div className="skeleton h-4 w-36 mb-1" />
+            <div className="skeleton h-4 w-48" />
           </div>
         </div>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '1rem',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          padding: '1rem',
-        }}
-      >
+      <div className="grid grid-cols-2 gap-4 border border-gray-300 rounded p-4">
         {[1, 2, 3].map((i) => (
           <div key={i}>
-            <div
-              className="skeleton"
-              style={{
-                height: '1.5rem',
-                width: '120px',
-                marginBottom: '1rem',
-              }}
-            />
-            <div
-              className="skeleton"
-              style={{
-                height: '4rem',
-                width: '100%',
-                marginBottom: '1rem',
-                borderRadius: '4px',
-              }}
-            />
+            <div className="skeleton h-6 w-28 mb-4" />
+            <div className="skeleton h-16 w-full mb-4 rounded" />
           </div>
         ))}
       </div>
     </main>
   )
 }
-

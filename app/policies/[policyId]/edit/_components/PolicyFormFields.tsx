@@ -38,13 +38,13 @@ export function PolicyFormFields({
     const hasChanged = hasFieldChanged(fieldKey)
 
     return (
-      <div key={fieldKey} style={{ marginBottom: '1.5rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+      <div key={fieldKey} className="mb-6">
+        <label className="block mb-2 font-bold">
           {section.title || fieldKey}
         </label>
         {content}
         {hasChanged && currentVersion && (
-          <span style={{ color: 'orange', fontSize: '0.9rem', marginLeft: '1rem' }}>
+          <span className="text-orange-500 text-sm ml-4">
             (Changed from v{currentVersion.version})
           </span>
         )}
@@ -62,14 +62,14 @@ export function PolicyFormFields({
         section,
         <div>
           {section.options?.map((option: any) => (
-            <label key={option.value} style={{ display: 'block', marginBottom: '0.5rem' }}>
+            <label key={option.value} className="block mb-2">
               <input
                 type="radio"
                 name={fieldKey}
                 value={option.value}
                 checked={currentValue === option.value}
                 onChange={(e) => onFieldChange(fieldKey, e.target.value)}
-                style={{ marginRight: '0.5rem' }}
+                className="mr-2"
               />
               {option.label || option.value}
             </label>
@@ -85,7 +85,7 @@ export function PolicyFormFields({
         <select
           value={currentValue || ''}
           onChange={(e) => onFieldChange(fieldKey, e.target.value)}
-          style={{ padding: '0.5rem', width: '100%', maxWidth: '400px' }}
+          className="p-2 w-full max-w-md border border-gray-300 rounded"
         >
           <option value="">Select...</option>
           {section.options?.map((option: any) => (
@@ -105,7 +105,7 @@ export function PolicyFormFields({
           value={currentValue || ''}
           onChange={(e) => onFieldChange(fieldKey, e.target.value)}
           rows={4}
-          style={{ padding: '0.5rem', width: '100%', maxWidth: '600px' }}
+          className="p-2 w-full max-w-2xl border border-gray-300 rounded"
         />
       )
     }
@@ -115,12 +115,12 @@ export function PolicyFormFields({
 
   return (
     <div>
-      <div style={{ marginBottom: '2rem' }}>
+      <div className="mb-8">
         <h2>Policy Content</h2>
       </div>
       {sections.map(renderField)}
-      <div style={{ marginTop: '2rem', marginBottom: '1rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+      <div className="mt-8 mb-4">
+        <label className="block mb-2 font-bold">
           Change Reason:
         </label>
         <input
@@ -128,7 +128,7 @@ export function PolicyFormFields({
           value={changeNote}
           onChange={(e) => onChangeNoteChange(e.target.value)}
           placeholder="Describe what changed and why..."
-          style={{ padding: '0.5rem', width: '100%', maxWidth: '600px' }}
+          className="p-2 w-full max-w-2xl border border-gray-300 rounded"
         />
       </div>
     </div>

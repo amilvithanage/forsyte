@@ -40,7 +40,7 @@ export default async function PoliciesPage({ searchParams }: PoliciesPageProps) 
   const policies = await getPolicies(customerId)
 
   return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <main className="p-8 max-w-5xl mx-auto">
       <PolicyHeader />
       <CustomerIdFilter />
       <PolicyTable policies={policies} />

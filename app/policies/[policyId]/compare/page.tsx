@@ -76,7 +76,7 @@ export default async function ComparePage({ params, searchParams }: ComparePageP
   }
 
   return (
-    <main style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
+    <main className="p-8 max-w-7xl mx-auto">
       <CompareHeader
         templateName={policy.template.name}
         version1={version1}

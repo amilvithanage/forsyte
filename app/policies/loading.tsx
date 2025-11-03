@@ -3,57 +3,33 @@ import { CustomerIdFilter } from './_components/CustomerIdFilter'
 
 export default function PoliciesLoading() {
   return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <main className="p-8 max-w-5xl mx-auto">
       <PolicyHeader />
       <CustomerIdFilter />
-      <div style={{ marginTop: '2rem' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div className="mt-8">
+        <table className="w-full border-collapse">
           <thead>
-            <tr style={{ borderBottom: '2px solid #ccc' }}>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Template</th>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Customer ID</th>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Created</th>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Actions</th>
+            <tr className="border-b-2 border-gray-300">
+              <th className="text-left p-2">Template</th>
+              <th className="text-left p-2">Customer ID</th>
+              <th className="text-left p-2">Created</th>
+              <th className="text-left p-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {[1, 2, 3].map((i) => (
-              <tr key={i} style={{ borderBottom: '1px solid #eee' }}>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '150px',
-                    }}
-                  />
+              <tr key={i} className="border-b border-gray-200">
+                <td className="p-2">
+                  <div className="skeleton h-5 w-36" />
                 </td>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '120px',
-                    }}
-                  />
+                <td className="p-2">
+                  <div className="skeleton h-5 w-32" />
                 </td>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '100px',
-                    }}
-                  />
+                <td className="p-2">
+                  <div className="skeleton h-5 w-24" />
                 </td>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '100px',
-                    }}
-                  />
+                <td className="p-2">
+                  <div className="skeleton h-5 w-24" />
                 </td>
               </tr>
             ))}

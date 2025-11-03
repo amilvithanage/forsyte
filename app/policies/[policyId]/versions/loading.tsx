@@ -1,98 +1,41 @@
 export default function VersionsLoading() {
   return (
-    <main style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <div
-          className="skeleton"
-          style={{
-            height: '2rem',
-            width: '200px',
-            marginBottom: '1rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '1.2rem',
-            width: '300px',
-            marginBottom: '0.5rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '1.2rem',
-            width: '250px',
-          }}
-        />
+    <main className="p-8 max-w-5xl mx-auto">
+      <div className="mb-8">
+        <div className="skeleton h-8 w-48 mb-4" />
+        <div className="skeleton h-5 w-72 mb-2" />
+        <div className="skeleton h-5 w-60" />
       </div>
 
-      <div style={{ marginBottom: '2rem', padding: '1rem', backgroundColor: '#f0f0f0', borderRadius: '4px' }}>
-        <div
-          className="skeleton"
-          style={{
-            height: '1.5rem',
-            width: '150px',
-            marginBottom: '1rem',
-          }}
-        />
-        <div
-          className="skeleton"
-          style={{
-            height: '2.5rem',
-            width: '100%',
-          }}
-        />
+      <div className="mb-8 p-4 bg-gray-100 rounded">
+        <div className="skeleton h-6 w-36 mb-4" />
+        <div className="skeleton h-10 w-full" />
       </div>
 
-      <div style={{ marginTop: '2rem' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <div className="mt-8">
+        <table className="w-full border-collapse">
           <thead>
-            <tr style={{ borderBottom: '2px solid #ccc' }}>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Version</th>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Change Note</th>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Created</th>
-              <th style={{ textAlign: 'left', padding: '0.5rem' }}>Actions</th>
+            <tr className="border-b-2 border-gray-300">
+              <th className="text-left p-2">Version</th>
+              <th className="text-left p-2">Change Note</th>
+              <th className="text-left p-2">Created</th>
+              <th className="text-left p-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {[1, 2, 3].map((i) => (
-              <tr key={i} style={{ borderBottom: '1px solid #eee' }}>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '50px',
-                    }}
-                  />
+              <tr key={i} className="border-b border-gray-200">
+                <td className="p-2">
+                  <div className="skeleton h-5 w-12" />
                 </td>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '200px',
-                    }}
-                  />
+                <td className="p-2">
+                  <div className="skeleton h-5 w-48" />
                 </td>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '150px',
-                    }}
-                  />
+                <td className="p-2">
+                  <div className="skeleton h-5 w-36" />
                 </td>
-                <td style={{ padding: '0.5rem' }}>
-                  <div
-                    className="skeleton"
-                    style={{
-                      height: '1.2rem',
-                      width: '120px',
-                    }}
-                  />
+                <td className="p-2">
+                  <div className="skeleton h-5 w-28" />
                 </td>
               </tr>
             ))}
@@ -102,4 +45,3 @@ export default function VersionsLoading() {
     </main>
   )
 }
-

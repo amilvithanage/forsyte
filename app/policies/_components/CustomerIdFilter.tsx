@@ -29,14 +29,14 @@ export function CustomerIdFilter() {
   }
 
   return (
-    <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+    <div className="mb-4 flex gap-4 items-center">
       <label>
         Customer ID:
         <input
           type="text"
           value={customerId}
           onChange={(e) => handleCustomerIdChange(e.target.value)}
-          style={{ marginLeft: '0.5rem', padding: '0.5rem' }}
+          className="ml-2 p-2 border border-gray-300 rounded"
         />
       </label>
     </div>
