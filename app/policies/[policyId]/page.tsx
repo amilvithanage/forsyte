@@ -1,34 +1,10 @@
-import { policyService } from '@/services/policyService'
 import { policyVersionService } from '@/services/policyVersionService'
 import { PolicyViewerHeader } from './components/PolicyViewerHeader'
 import { PolicyViewerContent } from './components/PolicyViewerContent'
 import { PolicyViewerActions } from './components/PolicyViewerActions'
 import { PolicyVersion } from '@/types/policy'
+import { getPolicy } from '../_lib/policyUtils'
 import { notFound } from 'next/navigation'
-
-async function getPolicy(policyId: string) {
-  try {
-    const policy = await policyService.getPolicy(policyId)
-    if (!policy) {
-      return null
-    }
-    const policyWithTemplate = policy as typeof policy & {
-      template: { id: string; name: string; schemaJson: any }
-    }
-    return {
-      id: policyWithTemplate.id,
-      customerId: policyWithTemplate.customerId,
-      template: {
-        id: policyWithTemplate.template.id,
-        name: policyWithTemplate.template.name,
-        schemaJson: policyWithTemplate.template.schemaJson,
-      },
-    }
-  } catch (error) {
-    console.error('Error fetching policy:', error)
-    return null
-  }
-}
 
 async function getLatestVersion(policyId: string): Promise<PolicyVersion | null> {
   try {
@@ -86,11 +62,11 @@ export default async function PolicyViewPage({ params, searchParams }: PolicyVie
     : null
 
   const [policy, latestVersion] = await Promise.all([
-    getPolicy(policyId),
+    getPolicy(policyId, { includeSchemaJson: true }),
     getLatestVersion(policyId),
   ])
 
-  if (!policy) {
+  if (!policy || !policy.template) {
     notFound()
   }
 

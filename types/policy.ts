@@ -6,6 +6,7 @@ export interface Policy {
   template: {
     id: string
     name: string
+    schemaJson?: any // Optional, included when needed for editing/viewing
   }
 }
 
