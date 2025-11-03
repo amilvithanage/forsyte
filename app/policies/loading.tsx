@@ -1,5 +1,5 @@
-import { PolicyHeader } from './components/PolicyHeader'
-import { CustomerIdFilter } from './components/CustomerIdFilter'
+import { PolicyHeader } from './_components/PolicyHeader'
+import { CustomerIdFilter } from './_components/CustomerIdFilter'
 
 export default function PoliciesLoading() {
   return (

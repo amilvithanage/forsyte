@@ -1,7 +1,7 @@
 import { policyService } from '@/services/policyService'
-import { PolicyTable } from './components/PolicyTable'
-import { PolicyHeader } from './components/PolicyHeader'
-import { CustomerIdFilter } from './components/CustomerIdFilter'
+import { PolicyTable } from './_components/PolicyTable'
+import { PolicyHeader } from './_components/PolicyHeader'
+import { CustomerIdFilter } from './_components/CustomerIdFilter'
 import { Policy } from '@/types/policy'
 
 export const dynamic = 'force-dynamic'

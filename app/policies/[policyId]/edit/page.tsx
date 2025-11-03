@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { PolicyVersion, Policy } from '@/types/policy'
-import { PolicyEditorHeader } from './components/PolicyEditorHeader'
-import { PolicyFormFields } from './components/PolicyFormFields'
-import { PolicyEditorActions } from './components/PolicyEditorActions'
+import { PolicyEditorHeader } from './_components/PolicyEditorHeader'
+import { PolicyFormFields } from './_components/PolicyFormFields'
+import { PolicyEditorActions } from './_components/PolicyEditorActions'
 import { loadPolicyData, loadVersionData } from './_lib/editorUtils'
 
 export default function PolicyEditorPage() {

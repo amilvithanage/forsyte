@@ -1,6 +1,6 @@
 import { policyVersionService } from '@/services/policyVersionService'
-import { CompareHeader } from './components/CompareHeader'
-import { ComparisonView } from './components/ComparisonView'
+import { CompareHeader } from './_components/CompareHeader'
+import { ComparisonView } from './_components/ComparisonView'
 import { PolicyVersion } from '@/types/policy'
 import { getPolicy } from '../../_lib/policyUtils'
 import { notFound, redirect } from 'next/navigation'
