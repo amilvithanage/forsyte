@@ -2,6 +2,18 @@
 
 A policy versioning and template management system built with Next.js 14, TypeScript, Prisma, and PostgreSQL. This implementation focuses on **Option B: Basic Versioning System** from the Forsyte Technical Challenge.
 
+## 🚀 Live Deployment
+
+**This application is live and deployed to production:**
+
+🌐 **Live URL**: [https://forsyte.vercel.app/](https://forsyte.vercel.app/)
+
+### Production Environment
+- **Platform**: [Vercel](https://vercel.com/)
+- **Database**: [Neon PostgreSQL](https://neon.tech/)
+
+---
+
 ## Overview
 
 This system allows law firms to:
@@ -62,15 +74,6 @@ npm run dev
 ```
 
 Visit http://localhost:3000
-
-## Deployment
-
-This application is deployed to **Vercel** at [https://forsyte.vercel.app/](https://forsyte.vercel.app/) using **Neon DB** as the PostgreSQL database provider.
-
-### Production Environment
-- **Platform**: Vercel
-- **Database**: Neon PostgreSQL
-- **URL**: https://forsyte.vercel.app/
 
 ## Project Structure
 
