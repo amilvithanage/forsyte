@@ -1,7 +1,9 @@
 'use client'
 
+import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { createPolicy } from '@/app/policies/actions'
 
 interface CreatePolicyButtonProps {
   templateId: string
@@ -17,22 +19,11 @@ export function CreatePolicyButton({ templateId }: CreatePolicyButtonProps) {
 
     setLoading(true)
     try {
-      const response = await fetch('/api/policies', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerId, templateId }),
-      })
-
-      if (response.ok) {
-        const policy = await response.json()
-        router.push(`/policies/${policy.id}/edit`)
-      } else {
-        const error = await response.json()
-        alert(error.error || 'Failed to create policy')
-      }
-    } catch (error) {
+      const policy = await createPolicy(customerId, templateId)
+      router.push(`/policies/${policy.id}/edit`)
+    } catch (error: any) {
       console.error('Error creating policy:', error)
-      alert('Error creating policy')
+      alert(error.message || 'Failed to create policy')
     } finally {
       setLoading(false)
     }

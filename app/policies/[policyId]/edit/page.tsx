@@ -7,6 +7,7 @@ import { PolicyEditorHeader } from './_components/PolicyEditorHeader'
 import { PolicyFormFields } from './_components/PolicyFormFields'
 import { PolicyEditorActions } from './_components/PolicyEditorActions'
 import { loadPolicyData, loadVersionData } from './_lib/editorUtils'
+import { createPolicyVersion } from '../actions'
 
 export default function PolicyEditorPage() {
   const params = useParams()
@@ -66,27 +67,15 @@ export default function PolicyEditorPage() {
   const handleSave = async () => {
     setSaving(true)
     try {
-      const response = await fetch(`/api/policies/${policyId}/versions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contentJson,
-          changeNote: changeNote || null,
-        }),
-      })
-
-      if (response.ok) {
-        // Wait a brief moment to ensure DB write is committed
-        await new Promise((resolve) => setTimeout(resolve, 100))
-        // Use replace to avoid adding to history, then refresh to force server re-fetch
-        router.replace(`/policies/${policyId}/versions`)
-        router.refresh()
-      } else {
-        alert('Failed to save version')
-      }
-    } catch (error) {
+      await createPolicyVersion(policyId, contentJson, changeNote || null)
+      // Wait a brief moment to ensure DB write is committed
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      // Use replace to avoid adding to history, then refresh to force server re-fetch
+      router.replace(`/policies/${policyId}/versions`)
+      router.refresh()
+    } catch (error: any) {
       console.error('Error saving version:', error)
-      alert('Error saving version')
+      alert(error.message || 'Failed to save version')
     } finally {
       setSaving(false)
     }
@@ -103,7 +92,7 @@ export default function PolicyEditorPage() {
   const schemaJson = policy.template.schemaJson
   const sections = schemaJson?.sections || []
 
-    return (
+  return (
     <main className="p-8 max-w-5xl mx-auto">
       <PolicyEditorHeader
         templateName={policy.template.name}

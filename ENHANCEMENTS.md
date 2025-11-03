@@ -129,7 +129,9 @@ model Policy {
 
 ---
 
-### 3. Live Data Integration Layer
+### 3. Live Data Integration Layer (Option A Feature - Not Implemented)
+
+> **Note**: This is a feature from **Option A: Template + Data Integration** which was intentionally not chosen for this implementation. This section documents how it could be added in the future.
 
 Add service layer for fetching real-time assessment statistics used to populate policy documents.
 
@@ -168,9 +170,22 @@ GET /tenants/{tenantId}/risk-stats
 
 ## Summary
 
+**Current Implementation Focus:**
+✅ **Option B: Basic Versioning System** - Fully implemented and functional
+- Save different configurations of a policy
+- View previous versions with timestamps
+- Compare two versions side-by-side
+- Handle the data structure for version storage
+
 **Key Priority Enhancements:**
 1. 🔴 **Critical:** Authentication & Multi-tenant support
 2. 🟡 **High:** Error handling & Template versioning  
-3. 🟢 **Medium:** Live data integration & Advanced features
+3. 🟢 **Medium:** Advanced features (search, filtering, pagination)
+4. 🔵 **Optional/Future:** Live data integration (Option A feature - would extend current system)
 
-This vertical slice demonstrates the core versioning functionality. The enhancements above would transform it into a production-ready system capable of handling multiple law firms with robust security, performance, and compliance features.
+**Note on Option A Features:**
+Live data integration (Option A) was intentionally excluded from this implementation. If needed in the future, it would be added as an extension to the existing versioning system, allowing policy documents to include both:
+- Versioned configuration data (current implementation)
+- Live assessment statistics from screening APIs (future enhancement)
+
+This vertical slice demonstrates the core versioning functionality required for Option B. The enhancements above would transform it into a production-ready system capable of handling multiple law firms with robust security, performance, and compliance features.

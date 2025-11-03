@@ -1,6 +1,16 @@
-# Forsyte - Policy Builder
+# Forsyte - Policy Builder (Option B: Basic Versioning System)
 
-Policy versioning and template management system built with Next.js 14, TypeScript, Prisma, and PostgreSQL.
+A policy versioning and template management system built with Next.js 14, TypeScript, Prisma, and PostgreSQL. This implementation focuses on **Option B: Basic Versioning System** from the Forsyte Technical Challenge.
+
+## Overview
+
+This system allows law firms to:
+- Save different configurations of a policy
+- View previous versions with timestamps
+- Compare two versions side-by-side
+- Handle the data structure for version storage
+
+This is a vertical slice demonstrating core versioning functionality with full change tracking for regulatory compliance.
 
 ## Architecture
 
@@ -16,29 +26,37 @@ Policy versioning and template management system built with Next.js 14, TypeScri
 npm install
 ```
 
-2. Set up environment variables:
+2. Set up PostgreSQL database:
+   - **Option A**: Use Prisma Data Platform (recommended) - See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for instructions
+   - **Option B**: Use Docker PostgreSQL - See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for instructions
+   - **Option C**: Use an existing PostgreSQL instance - See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for instructions
+
+3. Set up environment variables:
 ```bash
-cp .env.example .env
-# Edit .env with your PostgreSQL connection string
+# Create .env file in the root directory
+# For Docker setup:
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/forsyte?schema=public"
+
+# For existing PostgreSQL:
 # DATABASE_URL="postgresql://user:password@localhost:5432/forsyte?schema=public"
 ```
 
-3. Run database migrations:
+4. Run database migrations:
 ```bash
 npm run db:migrate
 ```
 
-4. Generate Prisma client:
+5. Generate Prisma client:
 ```bash
 npm run db:generate
 ```
 
-5. (Optional) Seed sample data:
+6. (Optional) Seed sample data:
 ```bash
 npm run db:seed
 ```
 
-6. Start development server:
+7. Start development server:
 ```bash
 npm run dev
 ```
@@ -48,16 +66,21 @@ Visit http://localhost:3000
 ## Project Structure
 
 ```
-/app                          → UI only (Next.js App Router)
-  /api                        → API route handlers
+/app                          → UI layer (Next.js App Router)
   /policies                   → Policy management pages
+    /[policyId]               → Individual policy pages
+      /edit                   → Policy editor
+      /versions                → Version history
+      /compare                 → Version comparison
   /templates                  → Template listing page
+  page.tsx                    → Home page
 /services                     → Business logic layer
-/repositories                 → Prisma database access
+/repositories                  → Prisma database access
 /prisma
   /schema.prisma              → Database models
   /seed.ts                    → Seed script
 /lib                          → Shared utilities (Prisma client)
+/types                        → TypeScript type definitions
 ```
 
 ## Features
@@ -67,23 +90,15 @@ Visit http://localhost:3000
 ✅ Version comparison - Side-by-side diff view  
 ✅ View/Edit versions - View read-only or edit any version (creates new version)  
 
-## API Routes
+## Server Actions
 
-### Templates
-- `POST /api/templates` - Create template
-- `GET /api/templates` - List templates
-- `GET /api/templates/:templateId` - Get template
+This project uses Next.js Server Actions for server-side operations. Actions are located in:
 
-### Policies
-- `POST /api/policies` - Create policy (customer + template)
-- `GET /api/policies?customerId=` - List customer policies
-- `GET /api/policies/:policyId` - Get policy
+- `app/templates/actions.ts` - Template operations (create, list, get)
+- `app/policies/actions.ts` - Policy operations (create, list, get)
+- `app/policies/[policyId]/actions.ts` - Policy version operations (create, list, get, get latest)
 
-### Policy Versions
-- `POST /api/policies/:policyId/versions` - Create new version
-- `GET /api/policies/:policyId/versions` - List all versions
-- `GET /api/policies/:policyId/versions/latest` - Get latest version
-- `GET /api/policies/:policyId/versions/:version` - Get specific version
+All server actions use the `'use server'` directive and can be called directly from client components or server components.
 
 ## Data Model
 
@@ -127,5 +142,30 @@ npm test
 
 ## 📚 Additional Documentation
 
-For details on future enhancements, improvements, and production-ready considerations, see [ENHANCEMENTS.md](./ENHANCEMENTS.md).
+- **[DATABASE_SETUP.md](./DATABASE_SETUP.md)** - Database setup guide (Prisma Data Platform, Docker PostgreSQL, or existing instance)
+- **[ENHANCEMENTS.md](./ENHANCEMENTS.md)** - Future enhancements, improvements, and production-ready considerations
+
+## Technical Decisions
+
+### Why Option B (Basic Versioning System)?
+
+This implementation focuses on versioning because:
+1. **Core Requirement**: Versioning is fundamental to compliance systems where audit trails are critical
+2. **Data Integrity**: Demonstrates handling of version storage, change tracking, and historical data access
+3. **User Experience**: Shows how to build intuitive interfaces for legal professionals managing policy changes over time
+4. **Scalability**: Versioning system can be extended with live data integration in the future (see ENHANCEMENTS.md)
+
+## AI Tool Usage
+
+This project was developed with AI assistance (Claude/Cursor) for:
+- Initial project structure and boilerplate
+- TypeScript type definitions
+- Test case generation
+- Documentation structure
+
+Manual coding focused on:
+- Business logic for versioning
+- Server action handlers
+- UI components and user flows
+- Database schema design
 
