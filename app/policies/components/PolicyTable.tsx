@@ -31,12 +31,16 @@ export function PolicyTable({ policies }: PolicyTableProps) {
               {new Date(policy.createdAt).toLocaleDateString()}
             </td>
             <td style={{ padding: '0.5rem' }}>
+              <Link href={`/policies/${policy.id}`}>
+                View Latest Version
+              </Link>
+              {' | '}
               <Link href={`/policies/${policy.id}/edit`}>
-                Edit
+                Edit Latest Version
               </Link>
               {' | '}
               <Link href={`/policies/${policy.id}/versions`}>
-                Versions
+                Versions History
               </Link>
             </td>
           </tr>
